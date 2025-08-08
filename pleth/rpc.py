@@ -1,15 +1,17 @@
 import itertools
 import pleth.config
+import pleth.rate
 import random
 import requests
-import time
 import typing
 
 # Doc: https://ethereum.org/en/developers/docs/apis/json-rpc/
 
 
 def call(method: str, params: typing.List) -> typing.Any:
-    r = requests.post(pleth.config.current.url, json={
+    call.rate = getattr(call, 'rate', pleth.rate.Limits(pleth.config.current.rpc.qps, 1))
+    call.rate.wait(1)
+    r = requests.post(pleth.config.current.rpc.url, json={
         'id': random.randint(0x00000000, 0xffffffff),
         'jsonrpc': '2.0',
         'method': method,
@@ -188,9 +190,8 @@ def net_peer_count() -> str:
     return call('net_peerCount', [])
 
 
-def wait(hash: str):
+def wait(hash: str) -> None:
     for _ in itertools.repeat(0):
-        time.sleep(1)
         r = eth_get_transaction_by_hash(hash)
         if not r:
             continue

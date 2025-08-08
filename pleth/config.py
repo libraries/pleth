@@ -17,19 +17,28 @@ class ObjectDict(dict):
 develop = ObjectDict({
     'chain_id': 1337,
     'gas_base_fee': 21000,
-    'url': 'http://127.0.0.1:8545',
+    'rpc': ObjectDict({
+        'url': 'http://127.0.0.1:8545',
+        'qps': 32,
+    })
 })
 
 mainnet = ObjectDict({
     'chain_id': 1,
     'gas_base_fee': 21000,
-    'url': 'https://eth.drpc.org',
+    'rpc': ObjectDict({
+        'url': 'https://eth.drpc.org',
+        'qps': 2,
+    })
 })
 
 testnet = ObjectDict({
     'chain_id': 11155111,
     'gas_base_fee': 21000,
-    'url': 'https://rpc.sepolia.org',
+    'rpc': ObjectDict({
+        'url': 'https://rpc.sepolia.org',
+        'qps': 2,
+    })
 })
 
 
