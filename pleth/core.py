@@ -127,15 +127,15 @@ class TxLegacy:
 
     def envelope(self) -> bytearray:
         return pleth.rlp.encode([
-            pleth.rlp.put_uint(self.nonce),
-            pleth.rlp.put_uint(self.gas_price),
-            pleth.rlp.put_uint(self.gas),
+            self.nonce,
+            self.gas_price,
+            self.gas,
             self.to if self.to else bytearray(),
-            pleth.rlp.put_uint(self.value),
+            self.value,
             self.data,
-            pleth.rlp.put_uint(self.v),
-            pleth.rlp.put_uint(self.r),
-            pleth.rlp.put_uint(self.s),
+            self.v,
+            self.r,
+            self.s,
         ])
 
     def hash(self) -> bytearray:
@@ -157,15 +157,15 @@ class TxLegacy:
     def sign(self, prikey: PriKey) -> None:
         # EIP-155: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
         sign = prikey.sign(hash(pleth.rlp.encode([
-            pleth.rlp.put_uint(self.nonce),
-            pleth.rlp.put_uint(self.gas_price),
-            pleth.rlp.put_uint(self.gas),
+            self.nonce,
+            self.gas_price,
+            self.gas,
             self.to if self.to else bytearray(),
-            pleth.rlp.put_uint(self.value),
+            self.value,
             self.data,
-            pleth.rlp.put_uint(pleth.config.current.chain_id),
-            pleth.rlp.put_uint(0),
-            pleth.rlp.put_uint(0),
+            pleth.config.current.chain_id,
+            0,
+            0,
         ])))
         self.r = int.from_bytes(sign[0x00:0x20])
         self.s = int.from_bytes(sign[0x20:0x40])
@@ -205,17 +205,17 @@ class TxAccessList:
 
     def envelope(self) -> bytearray:
         return bytearray([0x01]) + pleth.rlp.encode([
-            pleth.rlp.put_uint(self.chain_id),
-            pleth.rlp.put_uint(self.nonce),
-            pleth.rlp.put_uint(self.gas_price),
-            pleth.rlp.put_uint(self.gas),
+            self.chain_id,
+            self.nonce,
+            self.gas_price,
+            self.gas,
             self.to if self.to else bytearray(),
-            pleth.rlp.put_uint(self.value),
+            self.value,
             self.data,
             self.access_list,
-            pleth.rlp.put_uint(self.v),
-            pleth.rlp.put_uint(self.r),
-            pleth.rlp.put_uint(self.s),
+            self.v,
+            self.r,
+            self.s,
         ])
 
     def hash(self) -> bytearray:
@@ -238,12 +238,12 @@ class TxAccessList:
 
     def sign(self, prikey: PriKey) -> None:
         sign = prikey.sign(hash(bytearray([0x01]) + pleth.rlp.encode([
-            pleth.rlp.put_uint(self.chain_id),
-            pleth.rlp.put_uint(self.nonce),
-            pleth.rlp.put_uint(self.gas_price),
-            pleth.rlp.put_uint(self.gas),
+            self.chain_id,
+            self.nonce,
+            self.gas_price,
+            self.gas,
             self.to if self.to else bytearray(),
-            pleth.rlp.put_uint(self.value),
+            self.value,
             self.data,
             self.access_list,
         ])))
@@ -290,18 +290,18 @@ class TxDynamicFee:
 
     def envelope(self) -> bytearray:
         return bytearray([0x02]) + pleth.rlp.encode([
-            pleth.rlp.put_uint(self.chain_id),
-            pleth.rlp.put_uint(self.nonce),
-            pleth.rlp.put_uint(self.gas_tip_cap),
-            pleth.rlp.put_uint(self.gas_fee_cap),
-            pleth.rlp.put_uint(self.gas),
+            self.chain_id,
+            self.nonce,
+            self.gas_tip_cap,
+            self.gas_fee_cap,
+            self.gas,
             self.to if self.to else bytearray(),
-            pleth.rlp.put_uint(self.value),
+            self.value,
             self.data,
             self.access_list,
-            pleth.rlp.put_uint(self.v),
-            pleth.rlp.put_uint(self.r),
-            pleth.rlp.put_uint(self.s),
+            self.v,
+            self.r,
+            self.s,
         ])
 
     def hash(self) -> bytearray:
@@ -325,13 +325,13 @@ class TxDynamicFee:
 
     def sign(self, prikey: PriKey) -> None:
         sign = prikey.sign(hash(bytearray([0x02]) + pleth.rlp.encode([
-            pleth.rlp.put_uint(self.chain_id),
-            pleth.rlp.put_uint(self.nonce),
-            pleth.rlp.put_uint(self.gas_tip_cap),
-            pleth.rlp.put_uint(self.gas_fee_cap),
-            pleth.rlp.put_uint(self.gas),
+            self.chain_id,
+            self.nonce,
+            self.gas_tip_cap,
+            self.gas_fee_cap,
+            self.gas,
             self.to if self.to else bytearray(),
-            pleth.rlp.put_uint(self.value),
+            self.value,
             self.data,
             self.access_list,
         ])))
