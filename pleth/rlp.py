@@ -1,13 +1,9 @@
 import typing
 
 
-def put_uint(data: int) -> bytearray:
-    return bytearray(data.to_bytes(32)).lstrip(bytearray([0x00]))
-
-
 def encode(data: int | bytearray | typing.List) -> bytearray:
     if isinstance(data, int):
-        return encode(put_uint(data))
+        return encode(bytearray(data.to_bytes(32)).lstrip(bytearray([0x00])))
     if isinstance(data, bytearray):
         body = bytearray()
         if len(data) == 0x01 and data[0] <= 0x7f:
@@ -17,7 +13,7 @@ def encode(data: int | bytearray | typing.List) -> bytearray:
             body.append(0x80 + len(data))
             body.extend(data)
             return body
-        size = put_uint(len(data))
+        size = bytearray(len(data).to_bytes(32)).lstrip(bytearray([0x00]))
         body.append(0xb7 + len(size))
         body.extend(size)
         body.extend(data)
@@ -30,7 +26,7 @@ def encode(data: int | bytearray | typing.List) -> bytearray:
         if len(body) <= 0x37:
             head.append(0xc0 + len(body))
             return head + body
-        size = put_uint(len(body))
+        size = bytearray(len(body).to_bytes(32)).lstrip(bytearray([0x00]))
         head.append(0xf7 + len(size))
         head.extend(size)
         return head + body
