@@ -30,12 +30,12 @@ class PriKey:
             'n': f'{self.n:064x}',
         }
 
-    def pubkey(self):
+    def pubkey(self) -> PubKey:
         pubkey = pleth.secp256k1.G * pleth.secp256k1.Fr(self.n)
         return PubKey(pubkey.x.x, pubkey.y.x)
 
     @classmethod
-    def random(cls) -> typing.Self:
+    def random(cls) -> PriKey:
         return PriKey(max(1, secrets.randbelow(pleth.secp256k1.N)))
 
     def sign(self, data: bytearray) -> bytearray:
@@ -92,7 +92,7 @@ class PubKey:
         return pleth.secp256k1.Pt(pleth.secp256k1.Fq(self.x), pleth.secp256k1.Fq(self.y))
 
     @classmethod
-    def pt_decode(cls, data: pleth.secp256k1.Pt) -> typing.Self:
+    def pt_decode(cls, data: pleth.secp256k1.Pt) -> PubKey:
         return PubKey(data.x.x, data.y.x)
 
 
@@ -353,7 +353,7 @@ class Text:
         data = '\x19Ethereum Signed Message:\n'
         data += str(len(self.data))
         data += self.data
-        return pleth.core.hash(data.encode())
+        return pleth.core.hash(bytearray(data.encode()))
 
     def pubkey(self, sig: bytearray) -> PubKey:
         m = pleth.secp256k1.Fr(int.from_bytes(self.hash()))

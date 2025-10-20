@@ -45,7 +45,7 @@ class Wallet:
     def balance(self) -> int:
         return int(pleth.rpc.eth_get_balance(f'0x{self.addr.hex()}', 'latest'), 0)
 
-    def contract_addr(self, hash: bytearray) -> str:
+    def contract_addr(self, hash: bytearray) -> bytearray:
         return bytearray.fromhex(pleth.rpc.eth_get_transaction_receipt(f'0x{hash.hex()}')['contractAddress'][2:])
 
     def contract_call(self, addr: bytearray, data: bytearray) -> bytearray:

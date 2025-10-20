@@ -22,6 +22,7 @@ def sign(prikey: pleth.secp256k1.Fr, m: pleth.secp256k1.Fr) -> typing.Tuple[plet
         if R.x.x >= pleth.secp256k1.N:
             v |= 2
         return r, s, v
+    raise Exception('unreachable')
 
 
 def verify(pubkey: pleth.secp256k1.Pt, m: pleth.secp256k1.Fr, r: pleth.secp256k1.Fr, s: pleth.secp256k1.Fr) -> bool:
