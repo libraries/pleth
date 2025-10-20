@@ -9,8 +9,9 @@ import typing
 
 
 def call(method: str, params: typing.List) -> typing.Any:
-    call.rate = getattr(call, 'rate', pleth.rate.Limits(pleth.config.current.rpc.qps, 1))
-    call.rate.wait(1)
+    if not hasattr(call, 'rate'):
+        setattr(call, 'rate', pleth.rate.Limits(pleth.config.current.rpc.qps, 1))
+    getattr(call, 'rate').wait(1)
     r = requests.post(pleth.config.current.rpc.url, json={
         'id': random.randint(0x00000000, 0xffffffff),
         'jsonrpc': '2.0',
@@ -154,7 +155,7 @@ def eth_protocol_version() -> str:
     return call('eth_protocolVersion', [])
 
 
-def eth_send_raw_transaction(tx: typing.Dict) -> str:
+def eth_send_raw_transaction(tx: str) -> str:
     return call('eth_sendRawTransaction', [tx])
 
 
