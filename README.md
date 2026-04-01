@@ -1,6 +1,6 @@
 # Pleth: Ethereum Library For Humans
 
-Pleth is a project that aims to provide human-friendly interfaces for common ethereum operations. Using pleth, you can easily and happily complete everything you want to do on eth.
+Pleth is a project that aims to provide human-friendly interfaces for common ethereum operations.
 
 ## Installation
 
@@ -96,7 +96,7 @@ $ python example/transfer.py --prikey 0x1 --to 0x2b5ad5c4795c026514f8317c7a215e2
 ## Test
 
 ```sh
-$ git clone https://github.com/ethereum/go-ethereum --branch release/1.14
+$ git clone https://github.com/ethereum/go-ethereum --branch release/1.17
 $ cd go-ethereum
 $ make geth
 
