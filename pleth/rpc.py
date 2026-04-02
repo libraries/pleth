@@ -8,7 +8,7 @@ import typing
 # Doc: https://ethereum.org/en/developers/docs/apis/json-rpc/
 
 
-def call(method: str, params: typing.List) -> typing.Any:
+def call(method: str, params: list) -> typing.Any:
     if not hasattr(call, 'rate'):
         setattr(call, 'rate', pleth.rate.Limits(pleth.config.current.rpc.qps, 1))
     getattr(call, 'rate').wait(1)
@@ -23,7 +23,7 @@ def call(method: str, params: typing.List) -> typing.Any:
     return r['result']
 
 
-def eth_accounts() -> typing.List[str]:
+def eth_accounts() -> list[str]:
     return call('eth_accounts', [])
 
 
@@ -31,7 +31,7 @@ def eth_block_number() -> str:
     return call('eth_blockNumber', [])
 
 
-def eth_call(body: typing.Dict, block_number: str) -> str:
+def eth_call(body: dict, block_number: str) -> str:
     return call('eth_call', [body, block_number])
 
 
@@ -43,7 +43,7 @@ def eth_coinbase() -> str:
     return call('eth_coinbase', [])
 
 
-def eth_estimate_gas(body: typing.Dict, block_number: str) -> str:
+def eth_estimate_gas(body: dict, block_number: str) -> str:
     return call('eth_estimateGas', [body, block_number])
 
 
@@ -55,11 +55,11 @@ def eth_get_balance(addr: str, block_number: str) -> str:
     return call('eth_getBalance', [addr, block_number])
 
 
-def eth_get_block_by_hash(hash: str) -> typing.Dict:
+def eth_get_block_by_hash(hash: str) -> dict:
     return call('eth_getBlockByHash', [hash, True])
 
 
-def eth_get_block_by_number(block_number: str) -> typing.Dict:
+def eth_get_block_by_number(block_number: str) -> dict:
     return call('eth_getBlockByNumber', [block_number, True])
 
 
@@ -75,15 +75,15 @@ def eth_get_code(addr: str, block_number: str) -> str:
     return call('eth_getCode', [addr, block_number])
 
 
-def eth_get_filter_changes(id: str) -> typing.List[typing.Dict]:
+def eth_get_filter_changes(id: str) -> list[dict]:
     return call('eth_getFilterChanges', [id])
 
 
-def eth_get_filter_logs(id: str) -> typing.List[typing.Dict]:
+def eth_get_filter_logs(id: str) -> list[dict]:
     return call('eth_getFilterLogs', [id])
 
 
-def eth_get_logs(option: typing.Dict) -> typing.List[typing.Dict]:
+def eth_get_logs(option: dict) -> list[dict]:
     return call('eth_getLogs', [option])
 
 
@@ -99,7 +99,7 @@ def eth_get_transaction_by_block_number_and_index(block_number: str, index: str)
     return call('eth_getTransactionByBlockNumberAndIndex', [block_number, index])
 
 
-def eth_get_transaction_by_hash(hash: str) -> typing.Dict:
+def eth_get_transaction_by_hash(hash: str) -> dict:
     return call('eth_getTransactionByHash', [hash])
 
 
@@ -107,7 +107,7 @@ def eth_get_transaction_count(addr: str, block_number: str) -> str:
     return call('eth_getTransactionCount', [addr, block_number])
 
 
-def eth_get_transaction_receipt(hash: str) -> typing.Dict:
+def eth_get_transaction_receipt(hash: str) -> dict:
     return call('eth_getTransactionReceipt', [hash])
 
 
@@ -143,7 +143,7 @@ def eth_new_block_filter() -> str:
     return call('eth_newBlockFilter', [])
 
 
-def eth_new_filter(option: typing.Dict) -> str:
+def eth_new_filter(option: dict) -> str:
     return call('eth_newFilter', [option])
 
 
@@ -159,7 +159,7 @@ def eth_send_raw_transaction(tx: str) -> str:
     return call('eth_sendRawTransaction', [tx])
 
 
-def eth_send_transaction(tx: typing.Dict) -> str:
+def eth_send_transaction(tx: dict) -> str:
     return call('eth_sendTransaction', [tx])
 
 
@@ -167,11 +167,11 @@ def eth_sign(addr: str, message: str) -> str:
     return call('eth_sign', [addr, message])
 
 
-def eth_sign_transaction(tx: typing.Dict) -> str:
+def eth_sign_transaction(tx: dict) -> str:
     return call('eth_signTransaction', [tx])
 
 
-def eth_syncing() -> typing.Dict:
+def eth_syncing() -> dict:
     return call('eth_syncing', [])
 
 

@@ -6,7 +6,6 @@ import pleth.keccak
 import pleth.rlp
 import pleth.secp256k1
 import secrets
-import typing
 
 
 def hash(data: bytearray) -> bytearray:
@@ -23,7 +22,7 @@ class PriKey:
     def __repr__(self) -> str:
         return json.dumps(self.json())
 
-    def json(self) -> typing.Dict:
+    def json(self) -> dict[str, str]:
         return {
             'n': f'{self.n:064x}',
         }
@@ -80,7 +79,7 @@ class PubKey:
         b.extend(self.y.to_bytes(32))
         return hash(b)[12:]
 
-    def json(self) -> typing.Dict:
+    def json(self) -> dict[str, str]:
         return {
             'x': f'{self.x:064x}',
             'y': f'{self.y:064x}'
@@ -100,7 +99,7 @@ class TxLegacy:
         nonce: int,
         gas_price: int,
         gas: int,
-        to: typing.Optional[bytearray],
+        to: bytearray | None,
         value: int,
         data: bytearray,
     ) -> None:
@@ -139,7 +138,7 @@ class TxLegacy:
     def hash(self) -> bytearray:
         return hash(self.envelope())
 
-    def json(self) -> typing.Dict:
+    def json(self) -> dict:
         return {
             'nonce': self.nonce,
             'gas_price': self.gas_price,
@@ -178,7 +177,7 @@ class TxAccessList:
         nonce: int,
         gas_price: int,
         gas: int,
-        to: typing.Optional[bytearray],
+        to: bytearray | None,
         value: int,
         data: bytearray,
     ) -> None:
@@ -219,7 +218,7 @@ class TxAccessList:
     def hash(self) -> bytearray:
         return hash(self.envelope())
 
-    def json(self) -> typing.Dict:
+    def json(self) -> dict:
         return {
             'chain_id': self.chain_id,
             'nonce': self.nonce,
@@ -262,7 +261,7 @@ class TxDynamicFee:
         gas_tip_cap: int,  # a.k.a. max_priority_fee_per_gas
         gas_fee_cap: int,  # a.k.a. max_fee_per_gas
         gas: int,
-        to: typing.Optional[bytearray],
+        to: bytearray | None,
         value: int,
         data: bytearray,
     ) -> None:
@@ -305,7 +304,7 @@ class TxDynamicFee:
     def hash(self) -> bytearray:
         return hash(self.envelope())
 
-    def json(self) -> typing.Dict:
+    def json(self) -> dict:
         return {
             'chain_id': self.chain_id,
             'nonce': self.nonce,
