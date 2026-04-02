@@ -1,10 +1,9 @@
 import itertools
 import pleth.secp256k1
 import secrets
-import typing
 
 
-def sign(prikey: pleth.secp256k1.Fr, m: pleth.secp256k1.Fr) -> typing.Tuple[pleth.secp256k1.Fr, pleth.secp256k1.Fr, int]:
+def sign(prikey: pleth.secp256k1.Fr, m: pleth.secp256k1.Fr) -> tuple[pleth.secp256k1.Fr, pleth.secp256k1.Fr, int]:
     # https://www.secg.org/sec1-v2.pdf
     # 4.1.3 Signing Operation
     for _ in itertools.repeat(0):
