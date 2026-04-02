@@ -1,5 +1,4 @@
 import pleth.core
-import typing
 
 # The Contract Application Binary Interface (ABI) is the standard way to interact with contracts in the Ethereum
 # ecosystem, both from outside the blockchain and for contract-to-contract interaction. Data is encoded according to
@@ -7,6 +6,7 @@ import typing
 # to decode.
 #
 # See: https://docs.soliditylang.org/en/latest/abi-spec.html
+
 
 def encode_uint256(data: int) -> bytearray:
     assert data >= 0
@@ -29,12 +29,12 @@ def decode_address(data: bytearray) -> bytearray:
     return data[12:]
 
 
-def function_selector(name: str, args_type: typing.List[str]) -> bytearray:
+def function_selector(name: str, args_type: list[str]) -> bytearray:
     s = name + '(' + ','.join(args_type) + ')'
     return pleth.core.hash(bytearray(s.encode()))[:4]
 
 
-def argument_encoding(data: typing.List[bytearray]) -> bytearray:
+def argument_encoding(data: list[bytearray]) -> bytearray:
     s = bytearray()
     for e in data:
         s.extend(e)

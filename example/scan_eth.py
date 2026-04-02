@@ -32,7 +32,7 @@ for tx in block['transactions']:
         v = v - 27 - pleth.config.current.chain_id * 2
         v = v % 4
     pubkey = pleth.ecdsa.pubkey(pleth.secp256k1.Fr(m), pleth.secp256k1.Fr(r), pleth.secp256k1.Fr(s), v)
-    sender = '0x' + pleth.core.PubKey(pubkey.x.x, pubkey.y.x).addr().hex()
+    sender = '0x' + pleth.core.PubKey(pubkey.x.n, pubkey.y.n).addr().hex()
     accept = tx['to']
     amount = int(tx['value'], 16) / pleth.denomination.ether
     print(f'{txhash} {sender} {accept} {amount}')

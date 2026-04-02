@@ -30,7 +30,7 @@ class PriKey:
 
     def pubkey(self) -> PubKey:
         pubkey = pleth.secp256k1.G * pleth.secp256k1.Fr(self.n)
-        return PubKey(pubkey.x.x, pubkey.y.x)
+        return PubKey(pubkey.x.n, pubkey.y.n)
 
     @classmethod
     def random(cls) -> PriKey:
@@ -51,10 +51,10 @@ class PriKey:
                 continue
             # Here we adjust the sign of s.
             # Doc: https://ethereum.stackexchange.com/questions/55245/why-is-s-in-transaction-signature-limited-to-n-21
-            if s.x * 2 >= pleth.secp256k1.N:
+            if s.n * 2 >= pleth.secp256k1.N:
                 s = -s
                 v = 1 - v
-            return bytearray(r.x.to_bytes(32)) + bytearray(s.x.to_bytes(32)) + bytearray([v])
+            return bytearray(r.n.to_bytes(32)) + bytearray(s.n.to_bytes(32)) + bytearray([v])
         raise Exception
 
 
@@ -91,7 +91,7 @@ class PubKey:
 
     @classmethod
     def pt_decode(cls, data: pleth.secp256k1.Pt) -> PubKey:
-        return PubKey(data.x.x, data.y.x)
+        return PubKey(data.x.n, data.y.n)
 
 
 class TxLegacy:
