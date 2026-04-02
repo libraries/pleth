@@ -1,6 +1,6 @@
 # Pleth: Ethereum Library For Humans
 
-Pleth is a project that aims to provide human-friendly interfaces for common ethereum operations.
+Pleth is a project that aims to provide human-friendly interfaces for common ethereum operations. Pleth is written in pure python and almost zero dependencies except the standard library.
 
 ## Installation
 
