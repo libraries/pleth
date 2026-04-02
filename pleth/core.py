@@ -1,8 +1,8 @@
-import Crypto.Hash.keccak
 import itertools
 import json
 import pleth.config
 import pleth.ecdsa
+import pleth.keccak
 import pleth.rlp
 import pleth.secp256k1
 import secrets
@@ -10,9 +10,7 @@ import typing
 
 
 def hash(data: bytearray) -> bytearray:
-    k = Crypto.Hash.keccak.new(digest_bits=256)
-    k.update(data)
-    return bytearray(k.digest())
+    return pleth.keccak.hash(data)
 
 
 class PriKey:

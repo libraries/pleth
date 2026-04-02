@@ -11,7 +11,7 @@ authors = [
 description = "Pleth: Ethereum Library For Humans"
 readme = "README.md"
 license = { file = "LICENSE" }
-dependencies = ["pycryptodome", "requests"]
+dependencies = ["requests"]
 
 [project.urls]
 homepage = "https://github.com/mohanson/pleth"
