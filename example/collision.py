@@ -1,6 +1,5 @@
 import argparse
 import pleth
-import random
 
 # Generate a random private key and check whplether there are assets under the private key.
 
