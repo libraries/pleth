@@ -29,7 +29,7 @@ if args.action == 'deploy':
 if args.action == 'set':
     user = pleth.wallet.Wallet(int(args.prikey, 0))
     data = pleth.abi.function_selector('set', ['uint256']) + pleth.abi.argument_encoding([
-        pleth.abi.encode_uint256(42),
+        pleth.abi.Uint256.encode(42),
     ])
     hash = user.contract_exec(bytearray.fromhex(args.addr[2:]), 0, data)
     print(f'hash = 0x{hash.hex()}')

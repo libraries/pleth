@@ -3,6 +3,7 @@ from . import config
 from . import core
 from . import denomination
 from . import ecdsa
+from . import io
 from . import keccak
 from . import objectdict
 from . import rate

@@ -1,4 +1,6 @@
+import io
 import pleth.core
+import pleth.io
 
 # The Contract Application Binary Interface (ABI) is the standard way to interact with contracts in the Ethereum
 # ecosystem, both from outside the blockchain and for contract-to-contract interaction. Data is encoded according to
@@ -6,27 +8,6 @@ import pleth.core
 # to decode.
 #
 # See: https://docs.soliditylang.org/en/latest/abi-spec.html
-
-
-def encode_uint256(data: int) -> bytearray:
-    assert data >= 0
-    assert data <= 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-    return bytearray(data.to_bytes(32))
-
-
-def decode_uint256(data: bytearray) -> int:
-    assert len(data) == 32
-    return int.from_bytes(data)
-
-
-def encode_address(data: bytearray) -> bytearray:
-    assert len(data) == 20
-    return bytearray(12) + data
-
-
-def decode_address(data: bytearray) -> bytearray:
-    assert len(data) == 32
-    return data[12:]
 
 
 def function_selector(name: str, args_type: list[str]) -> bytearray:
@@ -39,3 +20,40 @@ def argument_encoding(data: list[bytearray]) -> bytearray:
     for e in data:
         s.extend(e)
     return s
+
+
+class Address:
+    @classmethod
+    def decode(cls, reader: io.IOBase) -> bytearray:
+        return pleth.io.read_full(reader, 32)[12:]
+
+    @classmethod
+    def encode(cls, origin: bytearray) -> bytearray:
+        assert len(origin) == 20
+        return bytearray(12) + origin
+
+
+class Bytes:
+    @classmethod
+    def decode(cls, reader: io.IOBase) -> bytearray:
+        length = Uint256.decode(reader)
+        padded = (length + 31) & -32
+        return pleth.io.read_full(reader, padded)[:length]
+
+    @classmethod
+    def encode(cls, origin: bytearray) -> bytearray:
+        length = len(origin)
+        padded = (length + 31) & -32
+        return Uint256.encode(length) + origin + bytearray(padded - length)
+
+
+class Uint256:
+    @classmethod
+    def decode(cls, reader: io.IOBase) -> int:
+        return int.from_bytes(pleth.io.read_full(reader, 32), 'big')
+
+    @classmethod
+    def encode(cls, origin: int) -> bytearray:
+        assert origin >= 0
+        assert origin <= 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        return bytearray(origin.to_bytes(32, 'big'))
