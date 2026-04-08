@@ -7,8 +7,8 @@ Pleth is a project that aims to provide human-friendly interfaces for common eth
 ```sh
 $ pip install pleth
 # or
-$ git clone https://github.com/mohanson/pyeth
-$ cd pyeth
+$ git clone https://github.com/libraries/pleth
+$ cd pleth
 $ python -m pip install --editable .
 ```
 
